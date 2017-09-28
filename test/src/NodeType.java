@@ -16,14 +16,22 @@ public class NodeType {
         nodeA.getNextList().add('A');
         nodeA.getNextList().add('B');
         nodeA.setType('A');
+        nodeA.setEndType("ident");
         nodeB=new Node();
         nodeB.getNextList().add('B');
         nodeB.setType('B');
+        nodeB.setEndType("num");
+        nodeC=new Node();
         nodeC.getNextList().add('E');
         nodeC.setType('C');
+        nodeC.setEndType("more");
+        nodeD=new Node();
         nodeD.getNextList().add('E');
         nodeD.setType('D');
+        nodeD.setEndType("less");
+        nodeE=new Node();
         nodeE.setType('E');
+        nodeE.setEndType("equl");
     }
 
 
