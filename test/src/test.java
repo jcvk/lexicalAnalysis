@@ -11,7 +11,6 @@ public class test {
     private static int position = -1;
     private static Node beforeNode = null;
     private static StringBuilder word;
-    private static String contextWord;
     private static List<String> wsym;
 
     public static void main(String[] args) {
@@ -63,6 +62,7 @@ public class test {
                 function1();
             } else {
                 //可能出错
+                String contextWord;
                 if (beforeNode.getNextList().contains(getNextWoldType(singleWorld).getType())) {
                     word.append(singleWorld);
                     beforeNode = getNextWoldType(singleWorld);
@@ -128,35 +128,44 @@ public class test {
 
     private static void getWorldType(String contextWord, Node lastNode) {
         WorldType worldType = new WorldType();
-        if (lastNode.getEndType().equals("num")) {
-            worldType.setType("num");
-            worldType.setValue(Long.valueOf(contextWord));
-        } else if (lastNode.getEndType().equals("ident")) {
-            worldType.setType("ident");
-            for (String string : wsym) {
-                if (contextWord.equals(string)) {
-                    worldType.setType("sym");
-                    break;
+        switch (lastNode.getEndType()) {
+            case "num":
+                worldType.setType("num");
+                worldType.setValue(Long.valueOf(contextWord));
+                break;
+            case "ident":
+                worldType.setType("ident");
+                for (String string : wsym) {
+                    if (contextWord.equals(string)) {
+                        worldType.setType("sym");
+                        break;
+                    }
                 }
-            }
-        } else if (lastNode.getEndType().equals("more")) {
-            worldType.setType("more");
-        } else if (lastNode.getEndType().equals("less")) {
-            worldType.setType("less");
-        } else if (lastNode.getEndType().equals("equl")) {
-            if (contextWord.startsWith("<")) {
-                worldType.setType("lessEqul");
-            } else if (contextWord.startsWith(">")) {
-                worldType.setType("moreEqul");
-            } else {
-                worldType.setType("equl");
-            }
-        } else if (lastNode.getEndType().equals("left_bracket")) {
-            worldType.setType(lastNode.getEndType());
-        } else if (lastNode.getEndType().equals("right_bracket")) {
-            worldType.setType(lastNode.getEndType());
-        }else if (lastNode.getEndType().equals("end_line")){
-            worldType.setType(lastNode.getEndType());
+                break;
+            case "more":
+                worldType.setType("more");
+                break;
+            case "less":
+                worldType.setType("less");
+                break;
+            case "equl":
+                if (contextWord.startsWith("<")) {
+                    worldType.setType("lessEqul");
+                } else if (contextWord.startsWith(">")) {
+                    worldType.setType("moreEqul");
+                } else {
+                    worldType.setType("equl");
+                }
+                break;
+            case "left_bracket":
+                worldType.setType(lastNode.getEndType());
+                break;
+            case "right_bracket":
+                worldType.setType(lastNode.getEndType());
+                break;
+            case "end_line":
+                worldType.setType(lastNode.getEndType());
+                break;
         }
         worldType.setWorld(contextWord);
         worldType.tostring();
