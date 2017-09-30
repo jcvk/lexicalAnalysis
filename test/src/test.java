@@ -55,19 +55,6 @@ public class test {
     }
 
     private static void function1() {
-//        Node beforeNode=null;
-//        for (int i=0;i<str.length();i++){
-//            char sigleWold=str.charAt(i);
-//            //对读取到的字符进行判断种类
-//            if (beforeNode==null){
-//                beforeNode=getType(sigleWold);
-//            }else {
-//                //能够进行下去
-//                if (beforeNode.getNextList().contains(getType(sigleWold).getType())){
-//
-//                }
-//            }
-//        }
         char singleWorld = getNextChar();
         if (singleWorld != '$') {
             if (beforeNode == null) {
@@ -78,10 +65,10 @@ public class test {
                 //可能出错
                 if (beforeNode.getNextList().contains(getNextWoldType(singleWorld).getType())) {
                     word.append(singleWorld);
-                    beforeNode=getNextWoldType(singleWorld);
-                    if (textSize==0){
-                        contextWord=word.toString();
-                        getWorldType(contextWord,beforeNode);
+                    beforeNode = getNextWoldType(singleWorld);
+                    if (textSize == 0) {
+                        contextWord = word.toString();
+                        getWorldType(contextWord, beforeNode);
                     }
                     function1();
                 } else {
@@ -92,9 +79,9 @@ public class test {
                     word.delete(0, word.length());
                     beforeNode = getNextWoldType(singleWorld);
                     word.append(singleWorld);
-                    if (textSize==0){
-                        contextWord=word.toString();
-                        getWorldType(contextWord,beforeNode);
+                    if (textSize == 0) {
+                        contextWord = word.toString();
+                        getWorldType(contextWord, beforeNode);
                     }
                     function1();
                 }
@@ -115,7 +102,13 @@ public class test {
             return NodeType.nodeD;
         } else if (singleWorld == '=') {
             return NodeType.nodeE;
-        } else {
+        } else if (singleWorld == '(') {
+            return NodeType.nodeF;
+        } else if (singleWorld == ')') {
+            return NodeType.nodeG;
+        } else if (singleWorld == ';') {
+            return NodeType.nodeH;
+        }else {
             return null;
         }
 
@@ -158,6 +151,12 @@ public class test {
             } else {
                 worldType.setType("equl");
             }
+        } else if (lastNode.getEndType().equals("left_bracket")) {
+            worldType.setType(lastNode.getEndType());
+        } else if (lastNode.getEndType().equals("right_bracket")) {
+            worldType.setType(lastNode.getEndType());
+        }else if (lastNode.getEndType().equals("end_line")){
+            worldType.setType(lastNode.getEndType());
         }
         worldType.setWorld(contextWord);
         worldType.tostring();
